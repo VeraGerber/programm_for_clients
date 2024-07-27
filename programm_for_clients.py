@@ -1,6 +1,5 @@
 import psycopg2
 
-with  psycopg2.connect(database="learning", user="postgres", password="250299D") as conn:
     #Функция, создающая структуру БД (таблицы).
     def create_db(conn):
         cur = conn.cursor()
@@ -100,10 +99,11 @@ def delete_phone(conn, client_id):
 def search_client(conn, first_name=None, last_name=None, email=None, phone=None):
     cur = conn.cursor()
     cur.execute("""
-              SELECT * FROM Clients c JOIN phones p ON c.client_id = p.client_id WHERE first_name = %s OR last_name = %s OR email = %s OR p.phone = %s;
+              SELECT * FROM Clients c JOIN phones p ON c.client_id = p.client_id WHERE first_name LIKE %s OR last_name LIKE %s OR email LIKE %s OR p.phone LIKE %s;
               """, (first_name, last_name, email, phone))
     print(cur.fetchall())
 
+cur.close()
 
 with psycopg2.connect(database="learning", user="postgres", password="250299D") as conn:
     create_db(conn)
