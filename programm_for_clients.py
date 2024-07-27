@@ -18,7 +18,7 @@ import psycopg2
 
 
 # Функция, позволяющая добавить нового клиента.
-def add_client(conn, client_id, first_name, last_name, email, phones=None):
+def add_client(conn, client_id, first_name, last_name, email, phones='%'):
     cur = conn.cursor()
     cur.execute("""
   INSERT INTO clients(client_id, first_name, last_name, email) VALUES (%s, %s, %s, %s);
@@ -52,7 +52,7 @@ def add_phone(conn, client_id, phone):
 
 
 #Функция, позволяющая изменить данные о клиенте
-def change_client(conn, client_id, firt_name=None, email=None, phones=None):
+def change_client(conn, client_id, firt_name='%', email='%', phones='%'):
     cur = conn.cursor()
     cur.execute("""
               UPDATE Clients SET first_name = %s, last_name = %s, email = %s WHERE client_id = %s;
